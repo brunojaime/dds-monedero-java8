@@ -26,17 +26,20 @@ public class Cuenta {
     this.movimientos = movimientos;
   }
 
+
+  //Duplicated Code -> poner y sacar ambos validan que el valor no sea un monton negativo, y e instancian un nuevo movimiento (new Movimiento)
   public void poner(double cuanto) {
     if (cuanto <= 0) {
       throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
     }
-
+  
     if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
 
     new Movimiento(LocalDate.now(), cuanto, true).agregateA(this);
   }
+
 
   public void sacar(double cuanto) {
     if (cuanto <= 0) {
