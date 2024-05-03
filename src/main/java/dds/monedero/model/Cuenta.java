@@ -54,6 +54,7 @@ public class Cuenta {
       throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
           + " diarios, límite: " + limite);
     }
+    //Veo un acoplamiento raro. Cuenta instancia un nuevo movimiento, que llama a agregateA, y agregateA vuelve a llamar la cuenta con agregarMovimiento
     new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
   }
 
