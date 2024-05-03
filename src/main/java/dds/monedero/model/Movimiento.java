@@ -40,6 +40,8 @@ public class Movimiento {
     return esDeposito;
   }
 
+  //Solo me hace ruido porque digo, sino es deposito, es extracción. Asumo que es un booleano. Me parece que es poco extensible a nuevas operaciones.
+  // Pero quizás no hay mas que Depositar o Extraer, no estoy seguro de si es bad smell. (El bad smell me surge por ver un !esDeposito )
   public boolean isExtraccion() {
     return !esDeposito;
   }
