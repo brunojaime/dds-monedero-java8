@@ -14,8 +14,8 @@ public class Cuenta {
   private double saldo = 0;
   private List<Movimiento> movimientos = new ArrayList<>();
 
-  public Cuenta() {
-    saldo = 0;
+  public Cuenta() { //Está bueno que el constructor de menos parámetros llame al de mas parámetros pasando sus parámetros iniciales
+    this(0);
   }
 
   public Cuenta(double montoInicial) {
@@ -41,6 +41,12 @@ public class Cuenta {
 
   public void Extraer(double cuanto) {
     validarMontoNegativo(cuanto);
+    ValidarExtraccion(cuanto);
+    //Veo un acoplamiento raro. Cuenta instancia un nuevo movimiento, que llama a agregateA, y agregateA vuelve a llamar la cuenta con agregarMovimiento
+    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
+  }
+
+  private void ValidarExtraccion(double cuanto) {
     if (getSaldo() - cuanto < 0) {
       throw new SaldoMenorException("No puede Extraer mas de " + getSaldo() + " $");
     }
@@ -50,8 +56,6 @@ public class Cuenta {
       throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
           + " diarios, límite: " + limite);
     }
-    //Veo un acoplamiento raro. Cuenta instancia un nuevo movimiento, que llama a agregateA, y agregateA vuelve a llamar la cuenta con agregarMovimiento
-    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
   }
 
   private  void validarMontoNegativo(double cuanto) {
