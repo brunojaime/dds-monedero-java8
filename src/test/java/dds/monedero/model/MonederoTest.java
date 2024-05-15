@@ -21,44 +21,45 @@ public class MonederoTest {
   }
 
   @Test
-  void Poner() {
-    cuenta.poner(1500);
+  void HacerDepositoCambiarSaldoYRegistraElMovimiento() {
+    cuenta.Depositar(1500);
     Assertions.assertTrue(cuenta.getSaldo()==1500);
+    Assertions.assertEquals(1,cuenta.getMovimientos().size());
   }
   @Test
   void Sacar(){
     cuenta.setSaldo(1500);
-    cuenta.sacar(900);
+    cuenta.Extraer(900);
 
     Assertions.assertTrue(cuenta.getSaldo()==600);
   }
 
   @Test
   void PonerMontoNegativo() {
-    assertThrows(MontoNegativoException.class, () -> cuenta.poner(-1500));
+    assertThrows(MontoNegativoException.class, () -> cuenta.Depositar(-1500));
   }
 
   @Test
   public void ExtraerMontoNegativo() {
-    assertThrows(MontoNegativoException.class, () -> cuenta.sacar(-500));
+    assertThrows(MontoNegativoException.class, () -> cuenta.Extraer(-500));
   }
 
 
   @Test
   void TresDepositos() {
-    cuenta.poner(1500);
-    cuenta.poner(456);
-    cuenta.poner(1900);
+    cuenta.Depositar(1500);
+    cuenta.Depositar(456);
+    cuenta.Depositar(1900);
     Assertions.assertTrue(cuenta.getSaldo()==(1500+456+1900));
   }
 
   @Test
   void MasDeTresDepositos() {
     assertThrows(MaximaCantidadDepositosException.class, () -> {
-          cuenta.poner(1500);
-          cuenta.poner(456);
-          cuenta.poner(1900);
-          cuenta.poner(245);
+          cuenta.Depositar(1500);
+          cuenta.Depositar(456);
+          cuenta.Depositar(1900);
+          cuenta.Depositar(245);
     });
   }
 
@@ -66,7 +67,7 @@ public class MonederoTest {
   void ExtraerMasQueElSaldo() {
     assertThrows(SaldoMenorException.class, () -> {
           cuenta.setSaldo(90);
-          cuenta.sacar(1001);
+          cuenta.Extraer(1001);
     });
   }
 
@@ -74,7 +75,7 @@ public class MonederoTest {
   public void ExtraerMasDe1000() {
     assertThrows(MaximoExtraccionDiarioException.class, () -> {
       cuenta.setSaldo(5000);
-      cuenta.sacar(1001);
+      cuenta.Extraer(1001);
     });
   }
 @Test

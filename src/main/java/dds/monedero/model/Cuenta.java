@@ -27,8 +27,8 @@ public class Cuenta {
   }
 
 
-  //Duplicated Code -> poner y sacar ambos validan que el valor no sea un monton negativo, y e instancian un nuevo movimiento (new Movimiento)
-  public void poner(double cuanto) {
+  //Duplicated Code -> poner y Extraer ambos validan que el valor no sea un monton negativo, y e instancian un nuevo movimiento (new Movimiento)
+  public void Depositar(double cuanto) {
     validarMontoNegativo(cuanto);
     // Long Method. getMovimientos().stream.filter.count()
     if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) {
@@ -39,10 +39,10 @@ public class Cuenta {
   }
 
 
-  public void sacar(double cuanto) {
+  public void Extraer(double cuanto) {
     validarMontoNegativo(cuanto);
     if (getSaldo() - cuanto < 0) {
-      throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
+      throw new SaldoMenorException("No puede Extraer mas de " + getSaldo() + " $");
     }
     double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
     double limite = 1000 - montoExtraidoHoy;
