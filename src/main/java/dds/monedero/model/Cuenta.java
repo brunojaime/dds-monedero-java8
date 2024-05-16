@@ -41,12 +41,6 @@ public class Cuenta {
 
   public void Extraer(double cuanto) {
     validarMontoNegativo(cuanto);
-    ValidarExtraccion(cuanto);
-    //Veo un acoplamiento raro. Cuenta instancia un nuevo movimiento, que llama a agregateA, y agregateA vuelve a llamar la cuenta con agregarMovimiento
-    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
-  }
-
-  private void ValidarExtraccion(double cuanto) {
     if (getSaldo() - cuanto < 0) {
       throw new SaldoMenorException("No puede Extraer mas de " + getSaldo() + " $");
     }
@@ -56,6 +50,8 @@ public class Cuenta {
       throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
           + " diarios, límite: " + limite);
     }
+    //Veo un acoplamiento raro. Cuenta instancia un nuevo movimiento, que llama a agregateA, y agregateA vuelve a llamar la cuenta con agregarMovimiento
+    new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
   }
 
   private  void validarMontoNegativo(double cuanto) {
@@ -64,8 +60,7 @@ public class Cuenta {
     }
   }
 
-  public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
-    Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
+  public void agregarMovimiento(Movimiento movimiento) {
     movimientos.add(movimiento);
   }
 
