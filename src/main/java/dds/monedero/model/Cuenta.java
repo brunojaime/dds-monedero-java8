@@ -35,7 +35,7 @@ public class Cuenta {
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
 
-    new Deposito(LocalDate.now(), cuanto, true).agregateA(this);
+    new Deposito(LocalDate.now(), cuanto).agregateA(this);
   }
 
 
@@ -51,7 +51,7 @@ public class Cuenta {
           + " diarios, límite: " + limite);
     }
     //Veo un acoplamiento raro. Cuenta instancia un nuevo movimiento, que llama a agregateA, y agregateA vuelve a llamar la cuenta con agregarMovimiento
-    new Extraccion(LocalDate.now(), cuanto, false).agregateA(this);
+    new Extraccion(LocalDate.now(), cuanto).agregateA(this);
   }
 
   private  void validarMontoNegativo(double cuanto) {

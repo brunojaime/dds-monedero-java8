@@ -80,7 +80,7 @@ public class MonederoTest {
   }
 @Test
   void agregarDeposito(){
-    cuenta.agregarMovimiento(new Deposito( LocalDate.now(),600,true));
+    cuenta.agregarMovimiento(new Deposito( LocalDate.now(),600));
     Assertions.assertTrue(cuenta.getMovimientos().size()==1);
 }
 
