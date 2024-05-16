@@ -37,25 +37,29 @@ public class Movimiento {
   }
 
   public boolean isDeposito() {
-    return esDeposito;
+    return esDeposito();
   }
 
   //Solo me hace ruido porque digo, sino es deposito, es extracción. Asumo que es un booleano. Me parece que es poco extensible a nuevas operaciones.
   // Pero quizás no hay mas que Depositar o Extraer, no estoy seguro de si es bad smell. (El bad smell me surge por ver un !esDeposito )
   public boolean isExtraccion() {
-    return !esDeposito;
+    return !esDeposito();
   }
 
   public void agregateA(Cuenta cuenta) {
     cuenta.setSaldo(calcularValor(cuenta));
-    cuenta.agregarMovimiento(fecha, monto, esDeposito);
+    cuenta.agregarMovimiento(this);
   }
 
   public double calcularValor(Cuenta cuenta) {
-    if (esDeposito) {
+    if (esDeposito()) {
       return cuenta.getSaldo() + getMonto();
     } else {
       return cuenta.getSaldo() - getMonto();
     }
+  }
+
+  private boolean esDeposito() {
+    return esDeposito;
   }
 }
