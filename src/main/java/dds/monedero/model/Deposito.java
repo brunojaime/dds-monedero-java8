@@ -13,7 +13,7 @@ public class Deposito extends Movimiento{
   }
 
   @Override
-  boolean esDeposito() {
+  public boolean isDeposito() {
     return true;
   }
 }
